@@ -618,3 +618,6 @@ MigrationBackup/
 
 # Ignore generated requirements.txt
 /requirements.txt
+
+# Ignore Large Files
+*.mp4
