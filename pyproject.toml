@@ -36,6 +36,7 @@ scikit-image = "^0.18.3"
 opencv-contrib-python = "^4.5.4"
 numpy = "^1.21.4"
 scikit-learn = "^1.0.1"
+imutils = "^0.5.4"
 
 [tool.poetry.dev-dependencies]
 bandit = "^1.7.0"
