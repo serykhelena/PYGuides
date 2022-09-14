@@ -93,3 +93,8 @@ build-remove:
 
 .PHONY: clean-all
 clean-all: pycache-remove build-remove docker-remove
+
+
+#* Installation
+.PHONY: install
+install: poetry-install tools-install

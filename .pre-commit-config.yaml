@@ -14,34 +14,39 @@ repos:
       - id: end-of-file-fixer
         exclude: LICENSE
       - id: trailing-whitespace
+        exclude: ^exports/
       - id: mixed-line-ending
+        args: ["--fix=lf"]
       - id: check-merge-conflict
       - id: check-ast
       - id: check-executables-have-shebangs
       - id: debug-statements
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+      - id: check-docstring-first
+      - id: detect-private-key
+      - id: check-case-conflict
 
   - repo: local
     hooks:
-      - id: pyupgrade
-        name: pyupgrade
-        entry: poetry run pyupgrade --py38-plus
-        exclude: ^PYGuides/
-        types: [python]
-        language: system
-
       - id: isort
         name: isort
         entry: poetry run isort --settings-path pyproject.toml
-        exclude: ^PYGuides/
         types: [python]
         language: system
 
       - id: black
         name: black
         entry: poetry run black --config pyproject.toml
-        exclude: ^PYGuides/
         types: [python]
         language: system
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.31.0
+    hooks:
+      - id: pyupgrade
+        args:
+          - --py37-plus
 
   - repo: https://github.com/humitos/mirrors-autoflake
     rev: v1.3
@@ -59,8 +64,24 @@ repos:
     rev: 3.9.2
     hooks:
       - id: flake8
+        additional_dependencies: [flake8-docstrings, flake8-print]
 
   - repo: https://github.com/kynan/nbstripout
     rev: 0.5.0
     hooks:
       - id: nbstripout
+
+  - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.2.2
+    hooks:
+      - id: python-safety-dependencies-check
+        # exclude: notebooks/baseline_analysis/
+        args: [--ignore=44715]
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.0
+    hooks:
+      - id: bandit
+        args:
+          - -s
+          - B311,B301,B403,B303
